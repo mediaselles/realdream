@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0c0c0e">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23fd5fc2'><path d='M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z'/></svg>">
+  <title>OurDream.ai — Your Fantasy. No Limits.</title>
+  <meta name="description" content="Chat, call, and create with unlimited AI characters. 11M+ companions across Women, Men, and Trans, always online, free to start — no credit card required. 18+.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background lighting -->
+  <div class="bg-ambient-glow" aria-hidden="true"></div>
+
+  <!-- ============ 18+ AGE GATE (Fail-closed: visible until confirmed) ============ -->
+  <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gate-title">
+    <div class="gate-panel" id="gate-panel">
+      <div class="gate-logo">
+        <span class="lp-brand-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </span>
+        <span class="lp-brand-text">OurDream<span>.ai</span></span>
+      </div>
+      <span class="gate-chip">18+ RESTRICTED</span>
+      <h2 class="gate-title" id="gate-title">Are you 18 or older?</h2>
+      <p class="gate-body">This site contains adult companion roleplay and mature content. You must be 18 years or older to enter.</p>
+      <div class="gate-actions">
+        <button type="button" class="gate-btn gate-btn-yes" id="gate-yes">Yes, I am 18+ — Enter</button>
+        <button type="button" class="gate-btn gate-btn-no" id="gate-no">No, I am under 18</button>
+      </div>
+      <p class="gate-legal">By continuing you agree to our Terms of Service and Privacy Policy.</p>
+    </div>
+
+    <div class="gate-denied" id="gate-denied" hidden>
+      <span class="gate-denied-mark" aria-hidden="true">18+</span>
+      <h2 class="gate-title">Access Denied</h2>
+      <p class="gate-body">This platform is strictly restricted to adults aged 18 and older. Please close this window.</p>
+      <button type="button" class="gate-btn gate-btn-yes" id="gate-retry">I clicked the wrong button — Choose again</button>
+    </div>
+  </div>
+
+  <!-- ============ MANDATORY GENDER SELECTION MODAL ============ -->
+  <div class="gender-modal-overlay" id="gender-modal" role="dialog" aria-modal="true" aria-labelledby="gender-title">
+    <div class="gender-modal-card">
+      <button type="button" class="gender-modal-close" id="gender-modal-close" aria-label="Close dialog">&times;</button>
+      <div class="gender-modal-kicker">STEP 1 OF 1 · PREFERENCE</div>
+      <h2 class="gender-modal-title" id="gender-title">Choose Your Companion</h2>
+      <p class="gender-modal-sub">Who would you like to connect and chat with?</p>
+
+      <div class="gender-grid">
+        <!-- Women Option -->
+        <div class="gender-option selected" data-gender="women">
+          <div class="gender-icon-box">
+            <!-- Female Symbol -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="8" r="5"></circle>
+              <path d="M12 13v8"></path>
+              <path d="M9 18h6"></path>
+            </svg>
+          </div>
+          <span class="gender-label">Women</span>
+          <span class="gender-count">52 Available</span>
+        </div>
+
+        <!-- Men Option -->
+        <div class="gender-option" data-gender="men">
+          <div class="gender-icon-box">
+            <!-- Male Symbol -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="10" cy="14" r="5"></circle>
+              <path d="M19 5l-5.4 5.4"></path>
+              <path d="M15 5h4v4"></path>
+            </svg>
+          </div>
+          <span class="gender-label">Men</span>
+          <span class="gender-count">30 Available</span>
+        </div>
+
+        <!-- Trans Option -->
+        <div class="gender-option" data-gender="trans">
+          <div class="gender-icon-box">
+            <!-- Transgender Symbol -->
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 16v5"></path>
+              <path d="M10 19h4"></path>
+              <path d="M16 8l5-5"></path>
+              <path d="M17 3h4v4"></path>
+              <path d="M8 8L3 3"></path>
+              <path d="M7 3H3v4"></path>
+              <path d="M4 6l3-3"></path>
+            </svg>
+          </div>
+          <span class="gender-label">Trans</span>
+          <span class="gender-count">18 Available</span>
+        </div>
+      </div>
+
+      <button type="button" class="lp-btn lp-btn-primary gender-confirm-btn" id="gender-confirm-btn">
+        Continue to Chat
+      </button>
+    </div>
+  </div>
+
+  <!-- ============ CHARACTER DETAIL MODAL ============ -->
+  <div class="char-modal-overlay" id="char-modal" role="dialog" aria-modal="true">
+    <div class="char-modal-card">
+      <button type="button" class="gender-modal-close" id="char-modal-close" aria-label="Close dialog">&times;</button>
+      <div class="char-modal-media">
+        <img class="char-modal-img" src="" alt="Companion profile">
+        <video class="char-modal-video" src="" autoplay loop muted playsinline style="display:none;"></video>
+      </div>
+      <div class="char-modal-content">
+        <div>
+          <span class="char-modal-tag">ROMANCE</span>
+          <h2 class="char-modal-name">Character Name</h2>
+          <div class="char-modal-age">FEMALE · 24 YEARS OLD</div>
+          <p class="char-modal-desc">Detailed character description will load here.</p>
+        </div>
+        <div>
+          <div class="char-modal-stats">
+            <span>Chats: <strong class="char-modal-chats">500k+</strong></span>
+            <span>Likes: <strong class="char-modal-likes">1.2k</strong></span>
+            <span>Memory: <strong>Active</strong></span>
+          </div>
+          <div class="char-modal-btn-group">
+            <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?uid=141&sub3=chat" target="_blank" rel="noopener noreferrer" class="lp-btn lp-btn-primary lp-btn-lg char-modal-cta" style="width: 100%;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-right: 6px;"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              <span>Start Chatting Free &rarr;</span>
+            </a>
+            <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?uid=134&sub3=create" target="_blank" rel="noopener noreferrer" class="lp-btn lp-btn-create lp-btn-lg char-modal-create-cta" style="width: 100%; margin-top: 8px;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" style="margin-right: 6px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+              <span>Create Companion &rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ MASTHEAD / NAVBAR ============ -->
+  <header class="lp-bar">
+    <div class="lp-container lp-bar-inner">
+      <a href="#top" class="lp-brand" aria-label="OurDream.ai Home">
+        <span class="lp-brand-logo-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+        </span>
+        <span class="lp-brand-text">OurDream<span>.ai</span></span>
+      </a>
+
+      <nav class="lp-bar-links" aria-label="Primary Navigation">
+        <a href="#gallery">Gallery</a>
+        <a href="#create-section" class="lp-nav-create">Create <span class="nav-new-chip">New</span></a>
+        <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?url=https%3A%2F%2Fourdream.ai%2Fgenerate%3Ftracker%3D456%26affid%3D2031%26dpo%3D14&sub3=generate" target="_blank" rel="noopener noreferrer" class="lp-nav-generate">Generate</a>
+        <a href="#features">Features</a>
+      </nav>
+
+      <div class="lp-bar-meta">
+        <span class="lp-age-badge" title="Adults Only">18+</span>
+        <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?url=https%3A%2F%2Fourdream.ai%2Fgenerate%3Ftracker%3D456%26affid%3D2031%26dpo%3D14&sub3=generate" target="_blank" rel="noopener noreferrer" class="lp-btn-generate-nav">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          Generate
+        </a>
+        <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?uid=134&sub3=create" target="_blank" rel="noopener noreferrer" class="lp-btn-create-nav">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+          Create
+        </a>
+        <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?uid=141&sub3=chat" target="_blank" rel="noopener noreferrer" class="lp-btn lp-btn-primary lp-btn-sm lp-btn-chat" data-outbound>
+          Chat Now
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============ HERO ============ -->
+  <section id="top" class="lp-hero">
+    <div class="lp-container lp-hero-inner">
+      <div class="lp-hero-copy">
+        <span class="lp-issue-badge">
+          <span class="lp-issue-dot"></span>
+          ISSUE 01 — THE COMPANION EDITION
+        </span>
+        <h1 class="lp-hero-title">Your Fantasy.<br><span class="gradient-text">No Limits.</span></h1>
+
+        <div class="hero-generate-box">
+          <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?url=https%3A%2F%2Fourdream.ai%2Fgenerate%3Ftracker%3D456%26affid%3D2031%26dpo%3D14&sub3=generate" target="_blank" rel="noopener noreferrer" class="hero-generate-btn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+            </svg>
+            <span>Generate AI Characters</span>
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <p class="lp-hero-sub">
+          Chat and create with unlimited AI characters across <strong>Women</strong>, <strong>Men</strong>, and <strong>Trans</strong>. 11M+ companions, always online, free to start — no credit card required.
+        </p>
+
+        <!-- Mobile-friendly quick category jump pills -->
+        <div class="hero-quick-jumps">
+          <span class="hero-jump-title">Quick Select:</span>
+          <div class="hero-jump-pills">
+            <button type="button" class="hero-jump-pill" onclick="window.setGalleryFilter && window.setGalleryFilter('women'); document.getElementById('gallery').scrollIntoView({behavior: 'smooth'});">
+              👩 Women (52)
+            </button>
+            <button type="button" class="hero-jump-pill" onclick="window.setGalleryFilter && window.setGalleryFilter('men'); document.getElementById('gallery').scrollIntoView({behavior: 'smooth'});">
+              👨 Men (30)
+            </button>
+            <button type="button" class="hero-jump-pill" onclick="window.setGalleryFilter && window.setGalleryFilter('trans'); document.getElementById('gallery').scrollIntoView({behavior: 'smooth'});">
+              ⚧ Trans (18)
+            </button>
+          </div>
+        </div>
+
+        <p class="lp-hero-note">18+ only · Free to start · No credit card required</p>
+      </div>
+
+      <aside class="lp-hero-cover">
+        <div class="lp-cover-card lp-cover-portal">
+          <div class="portal-card-inner">
+            <div class="portal-chip">
+              <span class="portal-dot"></span> DIRECTORY ACCESS
+            </div>
+            <h3 class="portal-title">Select A Section<br><span class="gradient-text">To Meet Models</span></h3>
+            <p class="portal-desc">Choose a category to unlock verified 18+ AI companions:</p>
+
+            <div class="portal-actions">
+              <button type="button" class="portal-btn portal-women" onclick="window.setGalleryFilter && window.setGalleryFilter('women'); document.getElementById('gallery').scrollIntoView({behavior: 'smooth'});">
+                <div class="portal-btn-left">
+                  <span class="portal-btn-emoji">👩</span>
+                  <div class="portal-btn-info">
+                    <span class="portal-btn-label">Women</span>
+                    <span class="portal-btn-count">52 Active Companions</span>
+                  </div>
+                </div>
+                <span class="portal-btn-arrow">&rarr;</span>
+              </button>
+
+              <button type="button" class="portal-btn portal-men" onclick="window.setGalleryFilter && window.setGalleryFilter('men'); document.getElementById('gallery').scrollIntoView({behavior: 'smooth'});">
+                <div class="portal-btn-left">
+                  <span class="portal-btn-emoji">👨</span>
+                  <div class="portal-btn-info">
+                    <span class="portal-btn-label">Men</span>
+                    <span class="portal-btn-count">30 Active Companions</span>
+                  </div>
+                </div>
+                <span class="portal-btn-arrow">&rarr;</span>
+              </button>
+
+              <button type="button" class="portal-btn portal-trans" onclick="window.setGalleryFilter && window.setGalleryFilter('trans'); document.getElementById('gallery').scrollIntoView({behavior: 'smooth'});">
+                <div class="portal-btn-left">
+                  <span class="portal-btn-emoji">⚧</span>
+                  <div class="portal-btn-info">
+                    <span class="portal-btn-label">Trans</span>
+                    <span class="portal-btn-count">18 Active Companions</span>
+                  </div>
+                </div>
+                <span class="portal-btn-arrow">&rarr;</span>
+              </button>
+            </div>
+
+            <div class="portal-footer">
+              <span>⚡ Fast &amp; Unfiltered</span>
+              <span>🔒 100% Private</span>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ STATS STRIP ============ -->
+  <section class="lp-stats-strip" aria-label="Statistics">
+    <div class="lp-container">
+      <div class="lp-stats" id="lp-stats">
+        <!-- Injected via script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ GALLERY SECTION ============ -->
+  <section id="gallery" class="lp-section">
+    <div class="lp-container">
+      <!-- Category Tabs -->
+      <div class="gallery-controls">
+        <div class="gender-filter-tabs">
+          <button type="button" class="filter-tab" data-filter="women">
+            Women <span class="filter-tab-count">52</span>
+          </button>
+          <button type="button" class="filter-tab" data-filter="men">
+            Men <span class="filter-tab-count">30</span>
+          </button>
+          <button type="button" class="filter-tab" data-filter="trans">
+            Trans <span class="filter-tab-count">18</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Character Grid -->
+      <div class="lp-gallery-grid" id="lp-gallery-grid">
+        <!-- Dynamically injected via script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CREATE COMPANION STUDIO SECTION ============ -->
+  <section id="create-section" class="create-studio-section">
+    <div class="lp-container">
+      <div class="create-studio-card">
+        <div class="create-studio-copy">
+          <span class="lp-kicker">CUSTOM COMPANION STUDIO</span>
+          <h2>Design Your Own<br><span class="gradient-text">AI Companion.</span></h2>
+          <p>
+            Build your fantasy from the ground up: choose between realistic or anime styles, sculpt appearance, customize distinct voice pacing, and define enduring memories that survive every session.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FEATURES SECTION ============ -->
+  <section id="features" class="lp-section lp-section-tint">
+    <div class="lp-container">
+      <header class="lp-section-head">
+        <span class="lp-kicker">WAYS TO PLAY</span>
+        <h2 class="lp-section-title">Everything The Conversation Needs.</h2>
+        <p class="lp-section-lede">
+          Text, image, and total creation — three doors into your dream companion, all open at once.
+        </p>
+      </header>
+      <div class="lp-features-grid" id="lp-features">
+        <!-- Dynamically injected via script.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="lp-footer">
+    <div class="lp-container">
+      <div class="lp-footer-inner">
+        <div class="lp-footer-left">
+          <span class="lp-brand-logo-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+          </span>
+          <span class="lp-brand-text">OurDream<span>.ai</span></span>
+          <span class="lp-footer-tag">AI Roleplay &amp; Companion Chat</span>
+        </div>
+        <div class="lp-footer-right">
+          <a class="lp-footer-link" href="https://www.ourdreamersai13.com/496R32N/NFC9H/?url=https%3A%2F%2Fourdream.ai%2Fgenerate%3Ftracker%3D456%26affid%3D2031%26dpo%3D14&sub3=generate" target="_blank" rel="noopener noreferrer">Generate</a>
+          <a class="lp-footer-link" href="https://www.ourdreamersai13.com/496R32N/NFC9H/?uid=134&sub3=create" target="_blank" rel="noopener noreferrer">Create</a>
+          <a class="lp-footer-link" href="https://www.ourdreamersai13.com/496R32N/NFC9H/?uid=141&sub3=chat" data-outbound target="_blank" rel="noopener noreferrer">ourdream.ai</a>
+          <span class="lp-age-badge">18+</span>
+        </div>
+      </div>
+      <div class="lp-footer-legal">
+        <p>This is an independent advertising and companion portal, not the official brand website. For accurate product information, subscriptions, and account settings, please visit the official website.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ============ MOBILE FLOATING BOTTOM ACTION BAR ============ -->
+  <nav class="mobile-bottom-bar" aria-label="Mobile Navigation and Actions">
+    <div class="mobile-bottom-bar-inner">
+      <a href="#gallery" class="mobile-bottom-item" aria-label="View Character Gallery">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="7" height="7"></rect>
+          <rect x="14" y="3" width="7" height="7"></rect>
+          <rect x="14" y="14" width="7" height="7"></rect>
+          <rect x="3" y="14" width="7" height="7"></rect>
+        </svg>
+        <span>Gallery</span>
+      </a>
+
+      <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?uid=141&sub3=chat" target="_blank" rel="noopener noreferrer" class="mobile-bottom-chat-cta" data-outbound aria-label="Chat Now 18+">
+        <span class="mobile-bottom-pulse"></span>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <span>Chat Now (18+)</span>
+      </a>
+
+      <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?uid=134&sub3=create" target="_blank" rel="noopener noreferrer" class="mobile-bottom-item" aria-label="Create Custom AI Companion">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20h9"></path>
+          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+        </svg>
+        <span>Create</span>
+      </a>
+
+      <a href="https://www.ourdreamersai13.com/496R32N/NFC9H/?url=https%3A%2F%2Fourdream.ai%2Fgenerate%3Ftracker%3D456%26affid%3D2031%26dpo%3D14&sub3=generate" target="_blank" rel="noopener noreferrer" class="mobile-bottom-item" aria-label="Generate AI Images">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
+        <span>Generate</span>
+      </a>
+    </div>
+  </nav>
+
+  <script src="data.js"></script>
+  <script src="script.js" defer></script>
+</body>
+</html>
