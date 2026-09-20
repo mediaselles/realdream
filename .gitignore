@@ -1,0 +1,17 @@
+# Sensitive session & credential logs (DO NOT COMMIT)
+ef_cookies.txt
+tracking_cookies.txt
+login_trace.txt
+login_body.html
+post_body.html
+
+# Intermediate scraping & build artifacts
+raw_all_scraped.json
+extracted_types.json
+parsed_cards.json
+verified_live_characters.json
+*.zip
+
+# Operating System files
+.DS_Store
+Thumbs.db
